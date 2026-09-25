@@ -27,6 +27,7 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
+      title: 'Water Falls!',
       text: 'Water Falls!: A Water Flow Simulation Game',
       color: Colors.blue,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -54,6 +55,7 @@ class HowToScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
+      title: 'How to Play',
       text: 'Welcome to Water Falls! In this game, you can place different items on the grid to create a water flow simulation. Use the controls to add or remove items and watch how the water interacts with them. Have fun experimenting and creating your own water flow scenarios! There are 3 different items to choose from: Water, Dirt, and Air. Water will flow downwards and spread out, Dirt will block the flow of water, and Air will allow water to pass through and overide a block. Enjoy the game!',
       color: Colors.blue,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -70,6 +72,7 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
+      title: 'About the Project',
       text:'This project was created by a team of students as a part of the mobile software development course. The goal of this project was to create a fun game using Terraria inspired water mechanics and flow simulation. While this is far from perfect, we hope that you get some enjoyment out of experimenting with our game. If you have any ideas for improvements please let us know. Have fun and enjoy the game!',
       color: Colors.blue,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -98,12 +101,14 @@ Widget buildNavButton(BuildContext context, String label, Widget destination) {
 class ScreenTemplate extends StatelessWidget {
   final String text;
   final Color color;
+  final String title;
   final List<Widget> buttons;
   final MainAxisAlignment mainAxisAlignment;
 
 
   const ScreenTemplate({
     super.key,
+    required this.title,
     required this.text,
     required this.color,
     required this.buttons,
@@ -114,7 +119,12 @@ class ScreenTemplate extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(text),
+        title: Text(title),
+        titleTextStyle: const TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+          color: Color.fromARGB(255, 31, 27, 245),
+        ),
         backgroundColor: color,
         foregroundColor: const Color.fromARGB(255, 168, 235, 247),
       ),
