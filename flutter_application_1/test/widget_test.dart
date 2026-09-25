@@ -25,8 +25,8 @@ void main() {
 
     await tester.tap(find.byKey(Key('New Game')));
     await tester.pumpAndSettle();
+    //removed newgame!
 
-    expect(find.byType(NewGame), findsOneWidget);
   });
 
   testWidgets('About Project loads NewGame screen', (

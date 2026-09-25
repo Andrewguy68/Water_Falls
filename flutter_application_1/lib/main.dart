@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {  //Builds the main app widget
     return MaterialApp(
       title: 'Water Falls!',
       theme: ThemeData(
@@ -25,7 +25,7 @@ class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { //Builds the main screen widget
     return ScreenTemplate(
       title: 'Water Falls!',
       text: 'Water Falls!: A Water Flow Simulation Game',
@@ -40,7 +40,7 @@ class MainScreen extends StatelessWidget {
   }
 }
 
-class GameGrid extends StatelessWidget {
+class GameGrid extends StatelessWidget {  //Builds the game grid widget
   const GameGrid({super.key});
   @override
   Widget build(BuildContext context) {
@@ -53,7 +53,7 @@ class HowToScreen extends StatelessWidget {
   const HowToScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { // Builds the how to play screen widget
     return ScreenTemplate(
       title: 'How to Play',
       text: 'Welcome to Water Falls! In this game, you can place different items on the grid to create a water flow simulation. Use the controls to add or remove items and watch how the water interacts with them. Have fun experimenting and creating your own water flow scenarios! There are 3 different items to choose from: Water, Dirt, and Air. Water will flow downwards and spread out, Dirt will block the flow of water, and Air will allow water to pass through and overide a block. Enjoy the game!',
@@ -66,7 +66,7 @@ class HowToScreen extends StatelessWidget {
   }
 }
 
-class AboutPage extends StatelessWidget {
+class AboutPage extends StatelessWidget { // Builds the about page widget
   const AboutPage({super.key});
 
   @override
@@ -83,7 +83,7 @@ class AboutPage extends StatelessWidget {
   }
 }
 
-Widget buildNavButton(BuildContext context, String label, Widget destination) {
+Widget buildNavButton(BuildContext context, String label, Widget destination) { // Builds a navigation button widget which creates all of the needed elevated buttons for this code.
   return Padding(
     padding: const EdgeInsets.symmetric(vertical: 8.0),
     child: ElevatedButton(
@@ -98,7 +98,7 @@ Widget buildNavButton(BuildContext context, String label, Widget destination) {
   );
 }
 
-class ScreenTemplate extends StatelessWidget {
+class ScreenTemplate extends StatelessWidget { //sets the template for the screens.
   final String text;
   final Color color;
   final String title;
@@ -116,7 +116,7 @@ class ScreenTemplate extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {   //Builds the screens
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
