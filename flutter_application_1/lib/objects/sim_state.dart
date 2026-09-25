@@ -1,17 +1,14 @@
 import 'dart:math' as math;
+
 import 'simulation.dart';
 
-enum Tap {
-water,
-solid,
-air,
-}
+enum Tap { water, solid, air }
 
 class GameState {
   GameState(this.rows, this.columns) {
     // snakeLength = math.min(rows, columns) - 5;
     // this.rows ?? 0;
-    fluid = Fluid(1000, columns, rows, 1/(math.max(rows, columns)));
+    fluid = Fluid(1000, columns, rows, 1 / (math.max(rows, columns)));
   }
 
   int rows;
@@ -20,8 +17,6 @@ class GameState {
   late Fluid fluid;
   // late int iterations;
   Tap tap = Tap.water;
-
-
 
   // List<math.Point<double>> body = <math.Point<double>>[const math.Point<double>(0, 0)];
   math.Point<double> direction = const math.Point<double>(0, 0);
@@ -33,8 +28,8 @@ class GameState {
     // body.add(next);
     // if (body.length > snakeLength) body.removeAt(0);
     direction = newDirection ?? direction;
-    
-    fluid.simulate(0.2, direction.x, direction.y, 5);
+
+    fluid.simulate(0.01, direction.x, direction.y, 4);
     // iterations += 1;
   }
 
@@ -51,14 +46,14 @@ class GameState {
   }
 
   void alterterrain(double x, double y) {
+    final brushRadius = fluid.h * 4;
+
     if (tap == Tap.water) {
-      fluid.addWater(x, y, 1, 1);
-    }
-    else if (tap == Tap.solid) {
-      fluid.addCircle(x, y, 1, true);
-    }
-    else if (tap == Tap.air) {
-      fluid.addCircle(x, y, 1, false);
+      fluid.addWater(x, y, brushRadius, 1);
+    } else if (tap == Tap.solid) {
+      fluid.addCircle(x, y, brushRadius, true);
+    } else if (tap == Tap.air) {
+      fluid.addCircle(x, y, brushRadius, false);
     }
   }
 }

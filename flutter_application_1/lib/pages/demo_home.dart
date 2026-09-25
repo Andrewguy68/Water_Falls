@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/widgets/modified_snake.dart';
 import 'package:sensors_plus/sensors_plus.dart';
@@ -13,9 +14,11 @@ class SensorHomePage extends StatefulWidget {
 }
 
 class SensorHomePageState extends State<SensorHomePage> {
-  static const int _snakeRows = 20;
-  static const int _snakeColumns = 20;
-  static const double _snakeCellSize = 10.0;
+  static const int _snakeRows = 100;
+  static const int _snakeColumns = 100;
+  static const double _snakeCellSize = 4.0;
+
+  late final Snake _snake;
 
   List<double>? _accelerometerValues;
   List<double>? _userAccelerometerValues;
@@ -34,66 +37,45 @@ class SensorHomePageState extends State<SensorHomePage> {
   @override
   void initState() {
     super.initState();
-    _streamSubscriptions.add(
-      accelerometerEvents.listen(
-        (AccelerometerEvent event) {
-          setState(() {
-            _accelerometerValues = <double>[event.x, event.y, event.z];
-          });
-        },
-      ),
+    _snake = Snake(
+      rows: _snakeRows,
+      columns: _snakeColumns,
+      cellSize: _snakeCellSize,
     );
     _streamSubscriptions.add(
-      gyroscopeEvents.listen(
-        (GyroscopeEvent event) {
-          setState(() {
-            _gyroscopeValues = <double>[event.x, event.y, event.z];
-          });
-        },
-      ),
+      accelerometerEvents.listen((AccelerometerEvent event) {
+        setState(() {
+          _accelerometerValues = <double>[event.x, event.y, event.z];
+        });
+      }),
     );
     _streamSubscriptions.add(
-      userAccelerometerEvents.listen(
-        (UserAccelerometerEvent event) {
-          setState(() {
-            _userAccelerometerValues = <double>[event.x, event.y, event.z];
-          });
-        },
-      ),
+      gyroscopeEvents.listen((GyroscopeEvent event) {
+        setState(() {
+          _gyroscopeValues = <double>[event.x, event.y, event.z];
+        });
+      }),
     );
     _streamSubscriptions.add(
-      magnetometerEvents.listen(
-        (MagnetometerEvent event) {
-          setState(() {
-            _magnetometerValues = <double>[event.x, event.y, event.z];
-          });
-        },
-      ),
+      userAccelerometerEvents.listen((UserAccelerometerEvent event) {
+        setState(() {
+          _userAccelerometerValues = <double>[event.x, event.y, event.z];
+        });
+      }),
+    );
+    _streamSubscriptions.add(
+      magnetometerEvents.listen((MagnetometerEvent event) {
+        setState(() {
+          _magnetometerValues = <double>[event.x, event.y, event.z];
+        });
+      }),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final accelerometer =
-        _accelerometerValues?.map((double v) => v.toStringAsFixed(1)).toList();
-    final gyroscope =
-        _gyroscopeValues?.map((double v) => v.toStringAsFixed(1)).toList();
-    final userAccelerometer = _userAccelerometerValues
-        ?.map((double v) => v.toStringAsFixed(1))
-        .toList();
-    final magnetometer =
-        _magnetometerValues?.map((double v) => v.toStringAsFixed(1)).toList();
-
-    Snake snake = Snake(
-                    rows: _snakeRows,
-                    columns: _snakeColumns,
-                    cellSize: _snakeCellSize,
-                  );
-
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title!),
-      ),
+      appBar: AppBar(title: Text(widget.title!)),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
@@ -102,29 +84,16 @@ class SensorHomePageState extends State<SensorHomePage> {
               decoration: BoxDecoration(
                 border: Border.all(width: 1.0, color: Colors.black38),
               ),
-              child: SizedBox(
-                height: _snakeRows * _snakeCellSize,
-                width: _snakeColumns * _snakeCellSize,
-                // child: Listener(
-                //   // This will report a PointerDownEvent whenever the user presses the screen.
-                //   // If you want updates as the user moves their finger across the screen,
-                //   // use onPointerMove instead.
-                //   onPointerDown: (PointerDownEvent event) {
-                //     // Global screen position.
-                //     // print("Global position x:${event.position.dx}, y:${event.position.dy}");
-                //     // Position relative to where this widget starts.
-                //     print("Relative position: x:${event.localPosition.dx}, y:${event.localPosition.dy}");
-                //     snake.
-
-
-                //   },
-                child: snake
-                // Snake(
-                //   rows: _snakeRows,
-                //   columns: _snakeColumns,
-                //   cellSize: _snakeCellSize,
-                // ),
-                // ),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: FittedBox(
+                  fit: BoxFit.contain,
+                  child: SizedBox(
+                    height: _snakeRows * _snakeCellSize,
+                    width: _snakeColumns * _snakeCellSize,
+                    child: _snake,
+                  ),
+                ),
               ),
             ),
           ),
@@ -132,42 +101,60 @@ class SensorHomePageState extends State<SensorHomePage> {
           // SensorDisplay(label: "UserAccelerometer", value: userAccelerometer),
           // SensorDisplay(label: "Gyroscope", value: gyroscope),
           // SensorDisplay(label: "Magnetometer", value: magnetometer),
-          Row(
+          Wrap(
+            alignment: WrapAlignment.center,
+            spacing: 8,
+            runSpacing: 8,
             children: [
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
-                  snake.state.changeinteraction("water");
+                  _snake.state.changeinteraction("water");
                 },
                 child: Text("Water"),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.brown,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
-                  snake.state.changeinteraction("solid");
+                  _snake.state.changeinteraction("solid");
                 },
-                
+
                 child: Text("Dirt"),
               ),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.grey,
-                  padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                  textStyle: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold)),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 16,
+                  ),
+                  textStyle: const TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
                 onPressed: () {
-                  snake.state.changeinteraction("air");
+                  _snake.state.changeinteraction("air");
                 },
                 child: Text("Air"),
               ),

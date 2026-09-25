@@ -9,11 +9,7 @@ import 'package:flutter_application_1/objects/simulation.dart';
 
 
 class Snake extends StatefulWidget {
-  Snake({super.key, this.rows = 20, this.columns = 20, this.cellSize = 10.0}){
-    assert(10 <= rows);
-    assert(10 <= columns);
-    assert(5.0 <= cellSize);
-
+  Snake({super.key, this.rows = 1000, this.columns = 1000, this.cellSize = 1.0}){
     state = GameState(rows, columns);
   }
 
@@ -51,7 +47,12 @@ class SnakeBoardPainter extends CustomPainter {
     //   ..color = Colors.black
     //   ..style = PaintingStyle.fill;
     canvas.drawRect(
-      Rect.fromPoints(Offset.zero, size.bottomLeft(Offset.zero)),
+      Rect.fromLTWH(
+        0,
+        0,
+        state!.columns * cellSize,
+        state!.rows * cellSize,
+      ),
       blackLine,
     );
     for (int x = 0; x < state!.columns; x++) {
@@ -59,7 +60,11 @@ class SnakeBoardPainter extends CustomPainter {
         final a = Offset(cellSize * x, cellSize * y);
         final b = Offset(cellSize * (x + 1), cellSize * (y + 1));
 
-        final density = state!.fluid.sampleField(x.toDouble(), y.toDouble(), Field.S_FIELD);
+        final density = state!.fluid.sampleField(
+          (x + 0.5) * state!.fluid.h,
+          (y + 0.5) * state!.fluid.h,
+          Field.S_FIELD,
+        );
         int airColor = (255 * (1.0 - density)).toInt();
 
         final colorfilled = Paint();
@@ -83,9 +88,7 @@ class SnakeBoardPainter extends CustomPainter {
 }
 
 class SnakeState extends State<Snake> {
-  SnakeState(int rows, int columns, GameState state, this.cellSize) {
-    // state = GameState(rows, columns);
-  }
+  SnakeState(int rows, int columns, this.state, this.cellSize);
 
   double cellSize;
   GameState? state;
@@ -130,18 +133,24 @@ class SnakeState extends State<Snake> {
 
   @override
   Widget build(BuildContext context) {
-    Listener(
-      // This will report a PointerDownEvent whenever the user presses the screen.
-      // If you want updates as the user moves their finger across the screen,
-      // use onPointerMove instead.
+    return Listener(
       onPointerDown: (PointerDownEvent event) {
-        // Global screen position.
-        // print("Global position x:${event.position.dx}, y:${event.position.dy}");
-        // Position relative to where this widget starts.
-        // print("Relative position: x:${event.localPosition.dx}, y:${event.localPosition.dy}");
-        state!.alterterrain(event.localPosition.dx, event.localPosition.dy);
+        final gridX = event.localPosition.dx / cellSize;
+        final gridY = event.localPosition.dy / cellSize;
+
+        final fluidX = (gridX + 0.5) * state!.fluid.h;
+        final fluidY = (gridY + 0.5) * state!.fluid.h;
+
+        state!.alterterrain(fluidX, fluidY);
+        setState(() {});
       },
+      child: CustomPaint(
+        size: Size(
+          widget.columns * cellSize,
+          widget.rows * cellSize,
+        ),
+        painter: SnakeBoardPainter(state, cellSize),
+      ),
     );
-    return CustomPaint(painter: SnakeBoardPainter(state, cellSize));
   }
 }

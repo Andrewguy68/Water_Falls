@@ -29,7 +29,9 @@ void main() {
     expect(find.byType(NewGame), findsOneWidget);
   });
 
-  testWidgets('About Project loads NewGame screen', (WidgetTester tester) async {
+  testWidgets('About Project loads NewGame screen', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
     await tester.tap(find.byKey(Key('About the Project')));
@@ -38,7 +40,7 @@ void main() {
     expect(find.byType(AboutPage), findsOneWidget);
   });
 
-    testWidgets('How To Play loads HowToScreen', (WidgetTester tester) async {
+  testWidgets('How To Play loads HowToScreen', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
 
     await tester.tap(find.byKey(Key('How To Play')));
@@ -47,7 +49,9 @@ void main() {
     expect(find.byType(HowToScreen), findsOneWidget);
   });
 
-  testWidgets('About Project allows return to Main Screen', (WidgetTester tester) async {
+  testWidgets('About Project allows return to Main Screen', (
+    WidgetTester tester,
+  ) async {
     await tester.pumpWidget(const MyApp());
 
     await tester.tap(find.byKey(Key('About the Project')));
