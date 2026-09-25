@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/widgets/sensor_display.dart';
 import 'package:flutter_application_1/widgets/modified_snake.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 

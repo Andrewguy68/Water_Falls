@@ -69,6 +69,14 @@ class HowToScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Text(
+       'Welcome to Water Falls! In this game, you can place different items on the grid to create a water flow simulation. Use the controls to add or remove items and watch how the water interacts with them. Have fun experimenting and creating your own water flow scenarios! There are 3 different items to choose from: Water, Dirt, and Air. Water will flow downwards and spread out, Dirt will block the flow of water, and Air will allow water to pass through and overide a block. Enjoy the game!',
+        style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.blue,
+        ),
+    );
     return ScreenTemplate(
       title: 'How To Play',
       color: Colors.blue,
@@ -85,6 +93,13 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        Text('This project was created by a team of students as a part of the mobile software development course. The goal of this project was to create a fun game using Terraria inspired water mechanics and flow simulation. While this is far from perfect, we hope that you get some enjoyment out of experimenting with our game. If you have any ideas for improvements please let us know. Have fun and enjoy the game!',
+        style: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.bold,
+        color: Colors.blue,
+        ),
+    );
     return ScreenTemplate(
       title: 'About the Project',
       color: Colors.blue,
@@ -105,8 +120,8 @@ Widget buildNavButton(BuildContext context, String label, Widget destination) {
           context,
           MaterialPageRoute(builder: (context) => destination),
         );
-      },
-      child: Text(label), key: Key(label),
+      }, key: Key(label),
+      child: Text(label),
     ),
   );
 }
