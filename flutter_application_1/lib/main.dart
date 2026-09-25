@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Water Falls!',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue, secondary: const Color.fromARGB(255, 68, 190, 255), tertiary: const Color.fromARGB(255, 71, 68, 255)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue),
         useMaterial3: true,
       ),
       home: const MainScreen(),
@@ -27,30 +27,13 @@ class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenTemplate(
-      text: 'Welcome to Water Falls!',
+      text: 'Water Falls!: A Water Flow Simulation Game',
       color: Colors.blue,
       mainAxisAlignment: MainAxisAlignment.center,
       buttons: [
-        buildNavButton(context, 'New Game', const NewGame()),
+        buildNavButton(context, 'New Game', const GameGrid()),
         buildNavButton(context, 'How To Play', const HowToScreen()),
         buildNavButton(context, 'About the Project', const AboutPage()),
-      ],
-    );
-  }
-}
-
-class NewGame extends StatelessWidget {
-  const NewGame({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return ScreenTemplate(
-      text: 'Item Select',
-      color: Colors.blue,
-      mainAxisAlignment: MainAxisAlignment.center,
-      buttons: [
-        buildNavButton(context, 'Game Grid', const GameGrid()),
-        buildNavButton(context, 'Main Menu', const MainScreen()),
       ],
     );
   }
@@ -63,6 +46,7 @@ class GameGrid extends StatelessWidget {
     return const SensorHomePage(title: "Game Grid");
   }
 }
+
 
 class HowToScreen extends StatelessWidget {
   const HowToScreen({super.key});
@@ -132,7 +116,7 @@ class ScreenTemplate extends StatelessWidget {
       appBar: AppBar(
         title: Text(text),
         backgroundColor: color,
-        foregroundColor: Colors.white,
+        foregroundColor: const Color.fromARGB(255, 168, 235, 247),
       ),
       body: Center(
         child: Column(
@@ -142,10 +126,11 @@ class ScreenTemplate extends StatelessWidget {
               padding: const EdgeInsets.all(16.0),
               child: Text(
                 text,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
-                  color: Colors.blue,
+                  color: Color.fromARGB(255, 31, 27, 245),
                   height: 2.0,
                 ),
               ),
