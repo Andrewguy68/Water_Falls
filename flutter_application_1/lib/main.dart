@@ -138,17 +138,21 @@ class ScreenTemplate extends StatelessWidget {
         child: Column(
           mainAxisAlignment: mainAxisAlignment,
           children: [
-            Text(
-              text,
-              style: const TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-                color: Colors.blue,
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.blue,
+                  height: 2.0,
+                ),
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 40),
             ...buttons,
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
           ],
         ),
       ),
