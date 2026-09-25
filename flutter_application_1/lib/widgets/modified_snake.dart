@@ -9,11 +9,7 @@ import 'package:flutter_application_1/objects/simulation.dart';
 
 
 class Snake extends StatefulWidget {
-  Snake({super.key, this.rows = 20, this.columns = 20, this.cellSize = 10.0}){
-    assert(10 <= rows);
-    assert(10 <= columns);
-    assert(5.0 <= cellSize);
-
+  Snake({super.key, this.rows = 1000, this.columns = 1000, this.cellSize = 1.0}){
     state = GameState(rows, columns);
   }
 
