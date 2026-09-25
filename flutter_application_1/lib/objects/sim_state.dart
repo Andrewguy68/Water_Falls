@@ -29,7 +29,7 @@ class GameState {
     // if (body.length > snakeLength) body.removeAt(0);
     direction = newDirection ?? direction;
 
-    fluid.simulate(0.2, direction.x, direction.y, 5);
+    fluid.simulate(0.01, direction.x, direction.y, 4);
     // iterations += 1;
   }
 
